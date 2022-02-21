@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 /// value.sol - a value is a simple thing, it can be get and set
 
 // Copyright (C) 2017  DappHub, LLC
@@ -15,25 +17,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-pragma solidity ^0.4.13;
+pragma solidity >=0.6.12;
 
 import 'ds-thing/thing.sol';
 
 contract DSValue is DSThing {
     bool    has;
     bytes32 val;
+
     function peek() public view returns (bytes32, bool) {
         return (val,has);
     }
+
     function read() public view returns (bytes32) {
-        var (wut, haz) = peek();
-        assert(haz);
-        return wut;
+        assert(has);
+        return val;
     }
+
     function poke(bytes32 wut) public note auth {
         val = wut;
         has = true;
     }
+
     function void() public note auth {  // unset the value
         has = false;
     }
